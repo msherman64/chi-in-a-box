@@ -7,6 +7,7 @@ docker_registry_username: registry
 docker_registry: docker.chameleoncloud.org
 kolla_base_distro: centos
 kolla_install_type: source
+openstack_tag_suffix: ''
 
 virtualenv: /etc/ansible/venv
 
