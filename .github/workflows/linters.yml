@@ -21,9 +21,24 @@ jobs:
     container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - name: install deps
-        run: dnf install -y python3-devel libffi-devel gcc openssl-devel python3-libselinux python3-virtualenv jq
+      - name: install dnf on centos7
+        if: contains(matrix.container, 'centos:7')
+        run: |
+          yum install -qy epel-release
+          yum install -qy dnf
+      - name: install dnf deps
+        if: contains(matrix.container, 'centos')
+        run: |
+          dnf install -qy \
+          python3-devel \
+          libffi-devel \
+          gcc \
+          openssl-devel \
+          python3-libselinux \
+          python3-virtualenv \
+          jq \
+          git
+          dnf clean all
       - name: init site config and venv
         run: ./cc-ansible --site ./site-config init
   #Lint Ansible Files
@@ -34,7 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - run: ./cc-ansible init
+      - run: ./cc-ansible initF
       - name: ansible-lint
         uses: reviewdog/action-ansiblelint@v1
         with:
