@@ -38,10 +38,10 @@ jobs:
           openssl-devel \
           python3-devel \
           python3-libselinux \
-          python3-pip \
           python3-virtualenv \
           python3-wheel
           dnf clean all
+      - run: pip3 install --upgrade pip
       - name: init site config and venv
         run: ./cc-ansible --site ./site-config init
       - name: ansible-lint
