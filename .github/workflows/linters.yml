@@ -41,9 +41,10 @@ jobs:
           python3-virtualenv \
           python3-wheel
           dnf clean all
-      - run: pip3 install --upgrade pip
       - name: init site config and venv
         run: ./cc-ansible --site ./site-config init
+      - name: reuse venv from cc-ansible
+        run: source ./venv/bin/activate
       - name: ansible-lint
         uses: reviewdog/action-ansiblelint@v1
         with:
