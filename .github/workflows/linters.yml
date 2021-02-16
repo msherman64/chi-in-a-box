@@ -30,26 +30,19 @@ jobs:
         if: contains(matrix.container, 'centos')
         run: |
           dnf install -qy \
-          python3-devel \
-          libffi-devel \
           gcc \
+          git \
+          jq \
+          libffi-devel \
+          openssl \
           openssl-devel \
+          python3-devel \
           python3-libselinux \
           python3-virtualenv \
-          jq \
-          git
+          python3-wheel
           dnf clean all
       - name: init site config and venv
         run: ./cc-ansible --site ./site-config init
-  #Lint Ansible Files
-  ansible-lint:
-    name: runner / ansible-lint
-    runs-on: ubuntu-latest
-    needs: cc-ansible
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - run: ./cc-ansible initF
       - name: ansible-lint
         uses: reviewdog/action-ansiblelint@v1
         with:
