@@ -24,12 +24,12 @@ jobs:
       - name: install dnf on centos7
         if: contains(matrix.container, 'centos:7')
         run: |
-          yum install -qy epel-release
-          yum install -qy dnf
+          yum install -q -y epel-release
+          yum install -q -y dnf
       - name: install dnf deps
         if: contains(matrix.container, 'centos')
         run: |
-          dnf install -qy \
+          dnf install -q -y \
           gcc \
           git \
           jq \
@@ -38,6 +38,7 @@ jobs:
           openssl-devel \
           python3-devel \
           python3-libselinux \
+          python3-pip \
           python3-virtualenv \
           python3-wheel
           dnf clean all
