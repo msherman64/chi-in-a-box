@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e -o pipefail
+
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 VIRTUALENV="$(realpath "${VIRTUALENV:-"$DIR"/venv}")"
 
@@ -16,7 +18,7 @@ CHECK_UPDATES=yes
 declare -a POSARGS=()
 declare -a TRAPS=()
 cleanup() {
-  for exit_trap in ${TRAPS[@]}; do "$exit_trap"; done
+  for exit_trap in "${TRAPS[@]}"; do "$exit_trap"; done
 }
 trap cleanup EXIT
 
