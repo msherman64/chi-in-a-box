@@ -44,7 +44,10 @@ jobs:
       - name: init site config and venv
         run: ./cc-ansible --site ./site-config init
       - name: reuse venv from cc-ansible
-        run: source ./venv/bin/activate
+        run: |
+          source ./venv/bin/activate
+          pip3 install --upgrade pip
+          pip3 install cryptography
       - name: ansible-lint
         uses: reviewdog/action-ansiblelint@v1
         with:
